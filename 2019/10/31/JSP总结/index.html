@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="刘世豪">
+
+
+    <meta name="subtitle" content="庸人自扰">
+
+
+
+
+<title>JSP总结 | 今晚月色真美</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">JSP总结</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">刘世豪</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 31, 2019&nbsp;&nbsp;14:04:09</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>JSP总结（经典）</p>
+<p>day1</p>
+<p>JSP 定义：</p>
+<pre><code>1)Java Server Page, Java EE 组件，本质上是 Servlet。
+
+2)运行在 Web Container.接收 Http Request,生成 Http Response(默认协议是 Http 请求和响应)
+
+3)JSP 使得我们能够分离页面的静态 HTML 和动态部分——我们需要的技术。
+
+4)使页面可以混和html代码、Java代码以及JSP标签；允许访问组件</code></pre><p>Servlet的缺陷(JSP出现的原因)：</p>
+<pre><code>1)写静态页面必须部署后才能看到效果，很难控制页面的外观。
+
+2)从技术角度来说Servlet是Java代码和HTML静态代码的混合代码。
+
+3)从市场竞争角度来说，微软推出了ASP产品。</code></pre><p>JSP的改进：</p>
+<pre><code>1)JSP是标签式的文本文件(Servlet是Java文件)
+
+2)JSP不需要编译(其实是由服务器监测JSP文件的变化，再将其翻译成 Servlet 代码)
+
+  服务器对其进行编译并在第一次请求时创建一个Servlet实例。所以，第一次访问JSP页面时会后延迟
+
+3)JSP不用写配置文件
+
+4)JSP以静态代码为主，Java代码为辅。Servlet反之。
+
+5)是J2EE蓝图的一部分(Servlet、JSP以及EJB是J2EE的三大组件)
+
+JSP从本质上来说内核还是Servlet，但与Servlet不是替代关系而是一种互补的关系。
+
+JSP适合于写显示层的动态页面，而Servlet则适合写控制层的业务控制(页面转发)。
+
+JSP往纯标签方向发展，Servlet往纯代码方向发展，他们以Servlet内核(请求响应式的工作方式)往两个方向发展。</code></pre><p>基本语法</p>
+<p>一、JSP的声明(statement)</p>
+<p>  用来定义在产生的类文件中的类的属性和方法(成员变量)。可声明类(即是内部类)。</p>
+<p>  由于servlet是工作在多线程环境下，所以尽量不要在service方法体外声明成员变量。</p>
+<p>  &lt;%!…..%&gt;  //声明时要加”!”，属于类成员，最先加载，可写于任何位置；不加则是脚本的局部变量，必须调用前写。</p>
+<p>  如：  &lt;%!String hello=”Hello, World!”;%&gt;  //变量的声明</p>
+<pre><code>&lt;%=hello%&gt;  //变量的调用
+
+&lt;%! private int counter=0;  public int count(){ return ++counter;} %&gt; //函数的声明
+
+&lt;h1&gt;&lt;%=count()%&gt;&lt;/h1&gt; //函数的调用</code></pre><p>  声明规则：</p>
+<pre><code>1) JSP中声明的变量和方法对应于Servlet中的实例方法和实例变量。这些将被同时请求该页面的所有用户所共享;
+
+2) 在使用变量或方法前须先定义(不是说声明变量的位置在页面中要处于使用变量的前面，而是指变量不声明不能使用);
+
+3) 声明的变量或方法的作用域为当前页面或包含的页面;
+
+4) 语句间以分号分隔。</code></pre><p>二、JSP代码段(Scriptlet)</p>
+<pre><code>&lt;% java代码 %&gt;</code></pre><p>  是一段可以在处理请求时间执行的Java代码。可以产生输出，也可以是一些流程控制语句。</p>
+<p>  在代码段中定义的变量为service方法中的局部变量。</p>
+<p>  1._jspService()中的局部代码：</p>
+<pre><code>  &lt;%  System.out.println(&quot;Hi,I like JSP.&quot;); %&gt;  //在控制台打印出，网页上没显示
+
+  &lt;%  out.println(&quot;Hi,I like JSP.&quot;); %&gt;          //打印在网页上
+
+  &lt;%  Connection conn=DriverManager.getConnection();  Statement st=conn.createStatement();
+
+    String sql=&quot;select * from users&quot;;              ResultSet rs=st.executeQuery(sql);
+
+    //……
+
+  %&gt;
+
+问：能否在JSP脚本里定义方法？
+
+答：不能！ //脚本相当于方法，不能在方法里定义方法
+
+  &lt;%!public void helloworld(){}%&gt;  //可以声明方法
+
+  &lt;% public void helloworld(){}%&gt;  //编译出错；脚本不能定义方法</code></pre><p>  2.比较:</p>
+<pre><code>&lt;%! int i=100;%&gt;    //成员变量
+
+&lt;%  int i=101;%&gt;    //_jspService()方法中的局部变量
+
+&lt;%=i%&gt;  //同一文件里，局部变量优先</code></pre><p>  3.脚本小程序规则：</p>
+<pre><code>1) 你使用的脚本语言决定了脚本小程序的规则;
+
+2) 语句间以分号分隔;
+
+3) 可以使用默认的对象、import进的类、declaration声明的方法和对象以及useBean tag中声明的对象。</code></pre><p>三、JSP表达式(expression)</p>
+<pre><code>&lt;%=……%&gt;  // &quot;=&quot;号</code></pre><p>  在JSP请求处理阶段计算他的值，表达式生成的代码是Service方法中的一个代码片断。</p>
+<p>  JSP对于声明的处理：1、计算表达式的值</p>
+<pre><code>            2、将值转换成String
+
+            3、用out.println发送标签；把数据输出至页面的当前位置
+
+&lt;%=&quot;Hello,JSP world!&quot;%&gt;    //out.println(&quot;Hello,JSP world&quot;);
+
+&lt;%=name%&gt;                  //&lt;%!String name=&quot;GiGi&quot;;%&gt; out.println(name);
+
+&lt;%=new java.util.Date()%&gt;  //out.println(new java.util.Date());</code></pre><p>  表达式规则：</p>
+<pre><code>1) 你使用的脚本语言决定了脚本小程序的规则;
+
+2) 执行的顺序为从左到右;
+
+3) 分号不能用于表达式。</code></pre><p>四、JSP指令(direction)</p>
+<p>  指令用于从JSP发送信息到容器上。用来设置全局变量，声明类，要实现的方法和输出内容等。</p>
+<p>  指令在JSP整个文件内有效。它为翻译阶段提供了全局信息。</p>
+<pre><code>&lt;%@......%&gt;  // &quot;@&quot;符号</code></pre><p>  指令包括：page、include、taglib</p>
+<p>  1.page指令</p>
+<pre><code>    import、session、errorPage、isThreadSafe
+
+页面的语言、内容类型、字符集、页面编码
+
+    &lt;%@page language=&quot;java&quot; contentType=&quot;text/html; charset=gbk&quot; pageEncoding=&quot;gbk&quot;%&gt;
+
+    language：java唯一值，表示脚本中使用的编程语言
+
+    contentType：设置了内容的类型和静态页面的编码 (告诉浏览器以什么编码显示)
+
+    pageEncoding：页面本身的编码格式 (写页面时用的编码格式)
+
+    上面的代码等价于servlet里： response.setContentType(&quot;text/html; charset=gbk&quot;);
+
+import：导入其他的包和类； 其中，JSP默认导入的包是java.lang.*
+
+    &lt;%@page import=&quot;java.util.Date&quot;%&gt; //具体的包和类
+
+    &lt;%@page import=&quot;java.sql.*&quot;%&gt;    //包下的所有类
+
+    &lt;%@page import=&quot;java.util.*, java.io.*, java.net.*&quot;%&gt; //连写，逗号分隔
+
+Session：指示当前的jsp是否参与会话 (默认为true； 参与会话)
+
+    通过指令使当前页面与session不可会话：    &lt;%@page session=&quot;false&quot;%&gt;
+
+    session=&quot;true&quot;时，可用内建对象session直接访问会话，例如：
+
+    &lt;%  session.setAttribute(&quot;username&quot;,&quot;maxwell&quot;);
+
+        String name = (String)session.getAttribute(&quot;username&quot;); %&gt;
+
+    &lt;%=name%&gt;
+
+errorPage：
+
+    isErrorPage：Jsp页面中出现异常的处理方式
+
+    对于有可能出现异常的页面：
+
+        &lt;%@page errorPage=&quot;error.jsp&quot;%&gt; //异常时会跳转到处理异常的页面；这页面自己写
+
+        在有可能异常的地方打印原因：  throw new Exception(&quot;数据库连接出错&quot;);
+
+    对于处理异常的页面(error.jsp)里：
+
+        &lt;%@page isErrorPage=&quot;true&quot;%&gt;，其中使用&lt;%=exception.getMessage() %&gt;把异常信息打印出来
+
+isThreadSafe——此属性已经不再使用(已废弃)
+
+    当前Jsp页面是否线程安全    default---&gt;true
+
+    &lt;%@page isThreadSafe=&quot;true&quot;%&gt;  //普通的Servlet,可以并发处理用户请求
+
+    &lt;%@page isThreadSafe=&quot;false&quot;%&gt; //相当于Servlet实现了SingleThreadModel</code></pre><p>  2.include指令</p>
+<pre><code>把目标页面的内容包含到当前页面,产生页面叠加以后的输出效果 //相当于将两个页面合并；编译时就包含进来
+
+&lt;%@include file=&quot;foot.jsp&quot;%&gt; //可插入任意位置</code></pre><p>  3.taglib指令</p>
+<pre><code>留在JSTL里讲解。</code></pre><p>五、JSP中的注释</p>
+<p>  1.java格式注释</p>
+<pre><code>编译器会忽略掉此类注释中的内容(客户端的源码看不见)
+
+&lt;%-- JSP注释；可多行 --%&gt;
+
+&lt;%// java 单行注释 %&gt;
+
+&lt;%/* java multi lines comments */%&gt;
+
+&lt;%/**java 特有的注释*/%&gt;</code></pre><p>  2.html风格注释</p>
+<pre><code>编译器会执行此类注释中的代码(客户端的源码看得见)
+
+&lt;!-- html风格注释 --&gt;  等价于out.println(&quot;&lt;!-- html风格注释 --&gt;&quot;)
+
+这种注释方式不好的地方就是当页面注释信息太多的时候会增大服务器的负荷。
+
+还有注释信息需要在网络上传输，从而降低效率；内部程序员的测试数据一般不能写在这种注释中，以免泄露。</code></pre><p>六、动作(Action)</p>
+<pre><code>&lt;jsp:actionName attributeName=attributeValue/&gt;</code></pre><p>  JSP的动作包括：</p>
+<pre><code>forward、include、useBean、setProperty、getProperty</code></pre><p>  1.forward动作</p>
+<pre><code>形式：&lt;jsp:forward page=&quot;another.jsp&quot;/&gt;
+
+      等价于 Servlet中通过RequestDispatcher.forward();
+
+可以传参数
+
+    &lt;jsp:forward  page=&quot;another.jsp&quot;&gt;
+
+        &lt;jsp:param name=&quot;name&quot; value=&quot;maxwell&quot;/&gt;
+
+        &lt;jsp:param name=&quot;age&quot; value=&quot;20&quot; /&gt;
+
+    &lt;/jsp:forward&gt;</code></pre><p>  2.Include动作</p>
+<pre><code>形式：&lt;jsp:include page=&quot;another.jsp&quot;/&gt;
+
+      等价于 Servlet中通过RequestDispatcher.include();
+
+  Include动作也可以传参数
+
+      &lt;jsp:include  page=&quot;b.jsp&quot; flush=&quot;true&quot;&gt;
+
+        &lt;jsp:param name=&quot;name&quot; value=&quot;narci&quot;/&gt;
+
+      &lt;/jsp:include&gt;
+
+  与&lt;%@include file=&quot;&quot;%&gt;比较：
+
+    include动作在运行期处理(include指令编译期)，jsp:include包含的是所包含URI的响应，而不是URI本身。
+
+    这意味着：jsp:include 对所指出的 URI 进行解释，因而包含的是生成的响应。
+
+    对于页面是静态内容，这没有太大的关系。但如果是动态内容，include动作可传参数。
+
+  flush 属性
+
+    flush 指示在读入包含内容之前是否清空任何现有的缓冲区。
+
+    JSP 1.1 中需要 flush 属性，因此，如果代码中不用它，会得到一个错误。
+
+    但是，在 JSP 1.2 中， flush 属性缺省为 false。
+
+    建议：由于清空大多数时候不是一个重要的问题，因此，对于 JSP 1.1，将 flush 设置为 true；
+
+          而对于 JSP 1.2 及更高版本，将其设置为 false 或不设置(用默认值)。</code></pre><p>JSP的生命周期</p>
+<pre><code>1) 每一个JSP都会对应有一个servlet生成
+
+2) 在 %tomcat%/work/Catalina/localhost/工程名/org/apache/jsp 目录下可找到对应生成的 Servlet 文件
+
+3) 一般而言，每一个JSP对应的servlet都有如下的生命周期方法：</code></pre><p>一、 _jspInit()方法</p>
+<pre><code>JSP容器第一次装载jsp文件时调用一次
+
+public void _jspInit(){……}</code></pre><p>二、 _jspService()方法</p>
+<pre><code>每当服务器接收到对该jsp的请求，都需要调用一次该方法一次。
+
+public void _jspService(HttpServletRequest request, HttpServletResponse response)
+
+  throws java.io.IOException, ServletException { ……}</code></pre><p>三、 _jspDestroy()方法</p>
+<pre><code>jsp文件被修改时，JSP容器会销毁旧的jsp文件对应的对象，重新装载一次更新后的jsp文件的内容(只调用一次)。
+
+public void _jspDestroy(){……}</code></pre><p>JSP处理过程：JSP源文件处理分成二个阶段：</p>
+<p>1) JSP页面转换阶段：</p>
+<pre><code>页面被编译成一个Java类，所有的HTML标记和JSP标记都被转换创建一个Servlet。这时，脚本和表达式还没有被执行;</code></pre><p>2) 请求处理阶段：发生在服务器，将一个客户端请求指向JSP页面。</p>
+<pre><code>一个请求对象创建、解析以及提交给编译好的JSP对应的servlet。
+
+当这个servlet处理请求的时候它执行先前在JSP中定义的处理脚本小程序和表达式。</code></pre><p>使用脚本代码的缺点和指导方针</p>
+<p>1) 缺点：</p>
+<pre><code>a. 过度使用脚本代码使用JSP页面混乱和难以维护;
+
+b. 脚本代码降低JSP二个主要的优点：软件重用和代码分开</code></pre><p>2) 指导方针：只在组件功能无能为力或需要有限的脚本时使用。</p>
+<p>day2</p>
+<p>  POJO： Plain Old Java Object  –&gt; 简单传统的Java对象</p>
+<p>  Java Bean： 组件、构件的规范(属性，提供get/set方法；还可包含其他方法)</p>
+<p>JSP调用JavaBean</p>
+<p>  通过引入JavaBean，JSP才能较好的把页面展示与业务逻辑分离。</p>
+<p>  其中，业务逻辑放到后台的Java Bean中，减少JSP中的脚本代码，有利于程序的可维护性与可重用性。</p>
+<p>一、Java Bean</p>
+<pre><code>a.无参构造器(也是默认的构造方法)
+
+b.标准的getter、setter方法
+
+c.如要进行网络传输(支持RMI)，需实现Serializable接口</code></pre><p>二、如何在JSP中使用JavaBean？</p>
+<p>  1.定义Java Bean</p>
+<pre><code>形式：&lt;jsp：useBean id = &quot;BeanName&quot; class = &quot;className&quot;  sope=&quot;范围域&quot;&gt;
+
+    id  ——声明bean对象的标识符，方便其他地方使用
+
+    class——bean对象的类型，注意要使用完全限定名
+
+    scope——java bean对象的共享范围(page、request、session、application)
+
+      page:当前页面范围(范围最小，生命周期最短)
+
+      request:同一个请求范围 (forward,include)
+
+      session:同一个会话(30分钟不使用，会自动结束)
+
+      application:同一个应用(范围最大，生命周期最长)  ServletContext
+
+例如：  SuperGirl &lt;jsp:useBean id=&quot;girl&quot; class=&quot;com.tarena.vo.SuperGirl&quot; scope=&quot;session&quot;/&gt;
+
+等价于：&lt;% SuperGirl girl=(SuperGirl)session.getAttribute(&quot;girl&quot;);
+
+      if(girl==null){
+
+          girl = new SuperGirl(); //对应 id 和 class
+
+          session.setAttribute(&quot;girl&quot;,girl);  //对应 scope 的值
+
+      } %&gt;
+
+可以用表达式获得bean的值：  &lt;%=girl.getName();%&gt;</code></pre><p>  2.对JavaBean的属性赋值</p>
+<pre><code>形式：&lt;jsp:setProperty name=&quot;JavaBean对象名&quot; property=&quot;JavaBean属性名&quot; value=&quot;属性值&quot;/&gt;
+
+    例子：  &lt;jsp:setProperty name=&quot;girl&quot; property=&quot;name&quot; value=&quot;Lily&quot;/&gt;
+
+    等价于： &lt;% girl.setName(&quot;Lily&quot;);%&gt;
+
+可以嵌套JSP表达式：
+
+    &lt;jsp:setProperty name=&quot;girl&quot; property=&quot;name&quot;
+
+    value=&apos;&lt;%=request.getParameter(&quot;name&quot;)%&gt;&apos;/&gt;
+
+Java Bean中的属性名与form中输入域的名字保持一致的话，可以使用通配符*，一次设置所有字段的值。
+
+    &lt;jsp:setProperty name=&quot;&quot; property=&quot;*&quot;/&gt;</code></pre><p>  3.获取JavaBean的属性值</p>
+<pre><code>形式：&lt;jsp:getProperty name=&quot;&quot; property=&quot;&quot;/&gt;
+
+    name：标识具体的Bean对象，这与&lt;jsp:useBean&gt;标准动作中的id值相匹配
+
+    property：标识属性中的标识符。 </code></pre><p>JSP中的异常处理</p>
+<p>一、try/catch/finally/throws/throw</p>
+<pre><code>// 在局部代码里处理异常。</code></pre><p>二、errorPage, isErrorPage</p>
+<pre><code>// 在整个页面处理异常。</code></pre><p>  1.errorPage</p>
+<pre><code>形如： &lt;%@page errorPage=&quot;error.jsp&quot;%&gt;
+
+表示：需要错误处理的页面</code></pre><p>  2.isErrorPage</p>
+<pre><code>形如： &lt;%@page isErrorPage=&quot;true&quot;%&gt;
+
+指示：错误页面。其中，有一个隐式对象exception可用： &lt;%=exception%&gt;
+
+      产生(隐含)内建对象exception,可通过它获得异常信息
+
+      &lt;%=exception.getMessage() %&gt; //把异常信息打印出来</code></pre><p>三、声明的方式处理异常</p>
+<pre><code>// 在整个应用处理异常。(范围比前两种更大)</code></pre><p>  1.配置： 在web.xml进行配置异常处理</p>
+<pre><code>…… &lt;error-page&gt;
+
+    &lt;exception-type&gt;java.lang.ArithmeticException&lt;/exception-type&gt;
+
+    &lt;location&gt;/MathError.jsp&lt;/location&gt;
+
+  &lt;/error-page&gt;
+
+  &lt;error-page&gt;
+
+    &lt;error-code&gt;404&lt;/error-code&gt;
+
+    &lt;location&gt;/404.jsp&lt;/location&gt;
+
+  &lt;/error-page&gt;  ……</code></pre><p>  2.复习：Java中的异常——有2种</p>
+<pre><code>受查异常(Checked Exception)
+
+非受查异常(Unchecked Exception)  Java中的RuntimeException及其子类是不需要处理的(try/catch)
+
+    因为所有的RuntimeException总是可以通过优化代码来避免，因此，这种异常被称为&quot;Unchecked Exception&quot;。</code></pre><p>  3.思考：</p>
+<pre><code>三种异常处理方式同时启动用，那个优先级高？ 作用域越小，优先级越高。</code></pre><p>  注意：要使得页面自动跳转到错误页面，必须关闭浏览器的”显示友好HTTP错误信息”选项。</p>
+<pre><code>public void _jspService(HttpServletRequest request, HttpServletResponse response)
+
+  throws java.io.IOException, ServletException { /*只处理这两种兼容的异常*/ …… } </code></pre><p>安全的系统(企业级应用)：</p>
+<p>  1.身份认证(合法用户)  –登录</p>
+<p>  2.授权(静态)        –定义权限</p>
+<p>  3.访问控制(动态)    –比较</p>
+<p>  4.安全审计(日志)    –修复bug (只有敏感的部门需要)</p>
+<p>JAAS实现安全</p>
+<p>  JAAS——Java Authentication and Authorization Service</p>
+<p>  (Java认证(Authentication)与授权(Authorization)服务)</p>
+<p>  是Java EE规范之一，实现Java EE应用程序安全性的一个重要途径</p>
+<p>  (要求：会使用，不必深入理解)</p>
+<p>一、网络安全的4大要素</p>
+<p>  认证——抵御假冒者(用户身份的合法性)</p>
+<p>  授权——合法用户拥有的权限</p>
+<p>  机密性——防止关键数据落入其他人手中</p>
+<p>  数据完整性——抵御窃听者(篡改私有数据)</p>
+<p>二、对于Http应用是如何进行认证的(Web端的认证方法)？</p>
+<p>  四种安全认证： (http协议)basic, form, digest, certificate(证书) + ssl</p>
+<p>  HttpMonitor监控受限资源的访问</p>
+<p>三、容器是如何完成认证与授权的呢？</p>
+<p>  图示(容器做了些什么事情)</p>
+<p>  (容器的角度)</p>
+<p>四、声明式安全以及分工</p>
+<p>  Servlet的开发者</p>
+<p>  应用的管理员</p>
+<p>  部署人员</p>
+<p>五、实战</p>
+<p>  1.定义新用户与角色</p>
+<pre><code>在Tomcat服务器中定义：    %TOMCAT_HOME%/conf/tomcat-user.xml
+
+&lt;?xml version=&apos;1.0&apos; encoding=&apos;utf-8&apos;?&gt;
+
+&lt;tomcat-users&gt;
+
+  &lt;role rolename=&quot;manager&quot;/&gt;
+
+    &lt;role rolename=&quot;admin&quot;/&gt;
+
+    &lt;user username=&quot;maxwell&quot; password=&quot;123&quot; roles=&quot;admin,manager&quot;/&gt;
+
+    &lt;user username=&quot;lily&quot; password=&quot;iloveyou&quot; roles=&quot;manager&quot;/&gt;
+
+&lt;/tomcat-users&gt;
+
+为什么tomcat可以使用tomcat-users.xml作为它保存用户和角色信息的文件？原因是在server.xml中，有以下配置：
+
+&lt;Resource name=&quot;UserDatabase&quot; auth=&quot;Container&quot;  type=&quot;org.apache.catalina.UserDatabase&quot;
+
+    description=&quot;User database that can be updated and saved&quot;
+
+    factory=&quot;org.apache.catalina.users.MemoryUserDatabaseFactory&quot;
+
+    pathname=&quot;conf/tomcat-users.xml&quot; /&gt;
+
+在DD中指定角色，则需在 web.xml 中配置：
+
+&lt;security-role&gt;
+
+    &lt;description /&gt;
+
+    &lt;role-name&gt;admin&lt;/role-name&gt;
+
+&lt;/security-role&gt;</code></pre><p>  2.声明安全性约束(指明受限资源)</p>
+<pre><code>在DD中加入&lt;security-constraint&gt;元素，其中包含了：
+
+  Web资源集合：&lt;web-resource-collection&gt;
+
+  其中包含了url资源以及http方法。
+
+授权约束：&lt;auth-constraint&gt;
+
+  &lt;security-constraint&gt;
+
+    &lt;display-name&gt;Constraint-all&lt;/display-name&gt;
+
+    &lt;web-resource-collection&gt;
+
+      &lt;web-resource-name&gt;all-resources&lt;/web-resource-name&gt;
+
+      &lt;description /&gt;
+
+      &lt;url-pattern&gt;/admin/＊&lt;/url-pattern&gt;    //被授权访问的目录和文件
+
+      &lt;url-pattern&gt;/security/＊&lt;/url-pattern&gt;
+
+      &lt;http-method&gt;GET&lt;/http-method&gt;
+
+      &lt;http-method&gt;POST&lt;/http-method&gt;
+
+    &lt;/web-resource-collection&gt;
+
+    &lt;auth-constraint&gt;
+
+      &lt;description /&gt;
+
+      &lt;role-name&gt;admin&lt;/role-name&gt;
+
+    &lt;/auth-constraint&gt;
+
+  &lt;/security-constraint&gt;
+
+要注意的规则：
+
+  不要认为：资源本身受到约束；其实，是资源 + Http方法组合受到约束
+
+  如果配置中不指定&lt;http-method&gt;，说明所有的方法(Get,Post,Trace,Head,Delete,Put,Options等)都受约束；
+
+  当指定了具体的&lt;http-method&gt;，那么约束只针对该方法，其他的http方法都不在约束之内；
+
+  &lt;auth-constraint&gt;定义的是哪些角色可以做出受约束的请求；而不是定义访问&lt;web-resource-collection&gt;
+
+  没有&lt;auth-constraint&gt;：任何角色都能访问；  空的&lt;auth-constraint /&gt;任何角色都不能访问；
+
+  对于不同的&lt;security-constraint&gt;，指定的url资源&lt;url-pattern&gt;在相同方法上定义了不同的&lt;auth-constrain&gt;，则存在合并规则。
+
+问题：为什么要设置&lt;auth-constraint /&gt;元素，使得任何角色的任何人都不能访问受限资源呢？其意义何在？
+
+    为了保护资源，只允许内部跳转去访问</code></pre><p>  3.选择认证方式</p>
+<pre><code>如果是BASIC认证：则无需指定Form表单的action。
+
+&lt;login-config&gt;
+
+    &lt;auth-method&gt;BASIC&lt;/auth-method&gt;
+
+    &lt;realm-name&gt;UserDatabaseRealm&lt;/realm-name&gt;
+
+&lt;/login-config&gt;
+
+如果是FORM认证：
+
+&lt;login-config&gt;
+
+  &lt;auth-method&gt;FORM&lt;/auth-method&gt;
+
+  &lt;form-login-config&gt;
+
+      &lt;form-login-page&gt;/logon/loginForm.jsp&lt;/form-login-page&gt;
+
+      &lt;form-error-page&gt;/logon/loginErrorForm.jsp&lt;/form-error-page&gt;
+
+  &lt;/form-login-config&gt;
+
+&lt;/login-config&gt;
+
+对于Form表单认证
+
+  action的值，用户名、密码字段的名称都是固定的(规范)
+
+  &lt;form method=&quot;POST&quot; action=&quot;j_security_check&quot;&gt;     
+
+    &lt;input type=&quot;text&quot; name=&quot;j_username&quot;&gt;     
+
+    &lt;input type=&quot;password&quot; name=&quot;j_password&quot;&gt;     
+
+    &lt;input type=&quot;submit&quot; value=&quot;Submit&quot; name=&quot;B1&quot;&gt;
+
+  &lt;/form&gt;
+
+标准的表单提交(固定不变)：
+
+  action：j_security_check
+
+  name:j_username
+
+  password:j_password</code></pre>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>刘世豪</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2019/10/31/JSP总结/">http://yoursite.com/2019/10/31/JSP总结/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/10/24/MySQL知识点总结/">MySQL知识点总结</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 刘世豪 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
