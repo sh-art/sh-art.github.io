@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="刘世豪">
+
+
+    <meta name="subtitle" content="庸人自扰">
+
+
+
+
+<title>JSP中使用JDBC连接MySQL数据库的详细步骤 | 今晚月色真美</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">JSP中使用JDBC连接MySQL数据库的详细步骤</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">刘世豪</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十月 31, 2019&nbsp;&nbsp;14:39:30</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>JSP中使用JDBC连接MySQL数据库的详细步骤</p>
+<p>1，首先在自己新建的项目文本框中输入Web Project的名称，然后单击下一步。</p>
+<p>img</p>
+<p>2，继续单击下一步</p>
+<p>3，把Generate web.xml deployment descriptor复选框勾上。</p>
+<p>img</p>
+<p>4，单击Finish,完成Web project工程的创建。</p>
+<p>img</p>
+<p>5，打开MyEclipse Datebase Explore,如图所示</p>
+<p>img</p>
+<p>6，按图中所示填写各项内容，并通过Add JARS添加相应的数据库驱动程序。</p>
+<p>img</p>
+<p>7，通过Test Driver测试驱动是否连接成功，需要输入密码。成功后如下图所示</p>
+<p>img</p>
+<p>8，单击Finish完成数据库的连接，右击选择Open Database Connection，输入密码后，并单击OK</p>
+<p>img</p>
+<p>9,接下来需要在创建的目录中添加MySQL数据库驱动，需要将相应的MySQL数据库驱动粘贴到WEB-INF/lib文件夹下。</p>
+<p>img</p>
+<p>10，通过右击mysql-connectior-java-5.1.6.jar,在Build Path中单击Add to Build Path</p>
+<p>img</p>
+<p>11,在index.jsp中输入如下代码，并配置相应mySQL数据库数据</p>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60</p>
+<p>&lt;%@ page language=”java” import=”java.util.<em>” pageEncoding=”utf-8”%&gt;<br>&lt;%@ page import=”java.sql.</em>” %&gt;</p>
+<body>
+<% <p>String driver = “com.mysql.jdbc.Driver”;<p></p>
+<p>// URL指向要访问的数据库名test1</p>
+<p>String url = “jdbc:mysql://127.0.0.1:3306/test”;</p>
+<p>// MySQL配置时的用户名</p>
+<p>String user = “root”;</p>
+<p>// Java连接MySQL配置时的密码</p>
+<p>String password = “111”;</p>
+<p>try {</p>
+<p>// 1 加载驱动程序</p>
+<p>Class.forName(driver);</p>
+<p>// 2 连接数据库</p>
+<p>Connection conn = DriverManager.getConnection(url, user, password);</p>
+<p>// 3 用来执行SQL语句</p>
+<p>Statement statement = conn.createStatement();</p>
+<p>// 要执行的SQL语句</p>
+<p>String sql = “select * from login”;</p>
+<p>ResultSet rs = statement.executeQuery(sql);<br>String name = null;<br>String mima=null;<br>while (rs.next()) {<br>name = rs.getString(“userName”);<br>mima = rs.getString(“passWord”);<br>out.println(name+”\t”+mima);<br>}<br>rs.close();<br>conn.close();<br>} catch (ClassNotFoundException e) {<br>System.out.println(“Sorry,can`t find the Driver!”);<br>e.printStackTrace();<br>} catch (SQLException e) {<br>e.printStackTrace();<br>} catch (Exception e) {<br>e.printStackTrace();<br>}</p>
+<p>%&gt;</p>
+</%></body>
+
+<p>12，这样就运行成功了，对于出现8080端口号被占用，可以采用如下的方法进行删除对应的进程。</p>
+<p>在命令提示符下，输入netstat -aon | findstr 8080</p>
+<p>找到对应的进程的PID，假设是7659 再输入如下的命令</p>
+<p>taskkill /pid 7659 /F</p>
+<p>即可删除对应的进程。</p>
+<p>Author: YG</p>
+<p>Permalink: <a href="http://yoursite.com/2019/10/30/JSP%E4%B8%AD%E4%BD%BF%E7%94%A8JDBC%E8%BF%9E%E6%8E%A5MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4/">http://yoursite.com/2019/10/30/JSP%E4%B8%AD%E4%BD%BF%E7%94%A8JDBC%E8%BF%9E%E6%8E%A5MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4/</a></p>
+<p>License: Copyright (c) 2019 CC-BY-NC-4.0 LICENSE</p>
+<p>Slogan: Do you believe in DESTINY?</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>刘世豪</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2019/10/31/JSP中使用JDBC连接MySQL数据库的详细步骤/">http://yoursite.com/2019/10/31/JSP中使用JDBC连接MySQL数据库的详细步骤/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/10/31/JSP总结/">JSP总结</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 刘世豪 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
