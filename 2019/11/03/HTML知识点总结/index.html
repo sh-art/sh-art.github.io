@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="刘世豪">
+
+
+    <meta name="subtitle" content="庸人自扰">
+
+
+
+
+<title>HTML知识点总结 | 今晚月色真美</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">HTML知识点总结</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">刘世豪</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十一月 3, 2019&nbsp;&nbsp;21:24:24</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>1.声明文档类型</p>
+<p>2.HTML基本语法：常规标记：&lt;标记 属性=”属性值”&gt;</p>
+<p>空标记：&lt;标记 属性=”属性值”/&gt;</p>
+<pre><code>加粗：区别：这个标签对应 bold，即文本加粗，其目的仅仅是为了加粗显示文本，是一种样式／风格需求；</code></pre><p>这个标签意思是加强，表示该文本比较重要，提醒读者／终端注意。为了达到这个目的，浏览器等终端将其加粗显示；</p>
+<p>总结：为了加粗而加粗，为了标明重点而加粗。</p>
+<p>4.倾斜：标签告诉浏览器将包含其中的文本以斜体字（italic）或者倾斜（oblique）字体显示；</p>
+<p>标签中的文本表示为强调的内容，对于所有浏览器的显示效果来说，是把这段文字用斜体来显示；</p>
+<p>5.get与post的区别：get（幂等）是从服务器上获取数据，post（非幂等）是向服务器传送数据。</p>
+<p>get是把参数数据队列加到提交表单的ACTION属性所指的URL中，值和表单内各个字段一一对应，在URL中可以看到。post是通过HTTP post机制，将表单内各个字段与其内容放置在HTML HEADER内一起传送到ACTION属性所指的URL地址。用户看不到这个过程。</p>
+<p>对于get方式，服务器端用Request.QueryString获取变量的值，对于post方式，服务器端用Request.Form获取提交的数据。</p>
+<p>get传送的数据量较小，不能大于2KB。post传送的数据量较大，一般被默认为不受限制。但理论上，IIS4中最大量为80KB，IIS5中为100KB。</p>
+<p>get安全性非常低，post安全性较高。但是执行效率却比Post方法好。</p>
+<p>建议：</p>
+<p>get方式的安全性较Post方式要差些，包含机密信息的话，建议用Post数据提交方式；</p>
+<p>在做数据查询时，建议用Get方式；而在做数据添加、修改或删除时，建议用Post方式；</p>
+<p>6.link 和@import的区别：</p>
+<p>link可以加载css外，@import是css提供的一种方式，也只能加载css；</p>
+<p>link引用的css会和页面同时加载，@import会等页面全部下载完成后再被加载</p>
+<p>@import存在兼容问题，低版本浏览器不识别。</p>
+<p>link可以控制dom元素，@import不是dom可以控制的。</p>
+<pre><code>伪类和伪元素：伪类（单引号）代表某一刻的状态：：after等</code></pre><p>伪元素（双引号）是指元素中特别的内容：(:：last-child）等</p>
+<p>a标签中顺序：：link（默认） ：visited（鼠标访问后） ：hover （鼠标滑过） :active （访问时）</p>
+<p>8.css层叠：元素的样式根据它样式所占权重的大小进行渲染（元素是1，类是10，id是100，伪类是1，伪元素是10）</p>
+<p>包含块：包含块（Containing Block）是绝对定位的基础，包含块为绝对定位元素提供坐标，偏移量和显示范围的参照物，定义元素为包含块，给绝对定位元素的父元素添加position：relative,即父元素就是一个包含块</p>
+<p>9.font：加粗（bolder normal 100~500） 倾斜（italic oblique normal）字体/行高 “宋体”</p>
+<p>10.word-spcing:词间距（单词与单词之间的间隔）</p>
+<p>letter-spacing:控制英文字母和汉字的字距</p>
+<p>border:double dotted dashed</p>
+<p>background-attachment:fixed：背景图固定，相对浏览器</p>
+<p>11.层级选择器：子级选择器，兄弟选择器，通用兄弟选择器</p>
+<p>12.给子元素设置外边距时:会默认加到父元素上</p>
+<p>给父元素或者子元素任意一个加float</p>
+<p>给父元素加padding或border</p>
+<p>13.内联元素：盒模型左右支持，上下不支持，水平从左到右排列，宽高为内 容大小（span strong em i br a img（行内块） input（行内块））</p>
+<p>块状元素： （div p li ul ol tr h1等 ）border 重叠显示</p>
+<p>可变元素：</p>
+<p>applet - java applet</p>
+<p>◎ button - 按钮</p>
+<p>◎ del - 删除文本</p>
+<p>◎ iframe - inline frame</p>
+<p>◎ ins - 插入的文本</p>
+<p>◎ map - 图片区块(map)</p>
+<p>◎ object - object对象</p>
+<p>◎ script - 客户端脚本</p>
+<p>14.设置float属性后，相当于给该属性加display:inline-block</p>
+<p>15.visiblity:hidden/visible 隐藏可见，但是还是占空间</p>
+<p>display：none 使对象完全消失，不占空间</p>
+<p>overflow:hidden auto visible(默认) inherit scroll</p>
+<p>16.定位：相对定位：relative（相对于自己的定位），占位</p>
+<p>绝对定位：absolute（相对于body的定位），不占位，如果有定位的父元素，则根据父元素进行定位</p>
+<p>固定定位：fixed（相对浏览器的窗口定位）</p>
+<p>默认值：static</p>
+<p>17.让一个元素始终在窗口水平 垂直位置居中：</p>
+<p>div{width:200px;height:200px;position:fixed/absolute;left:0;top:0;right:0;bottom:0;margin:auto}</p>
+<p>div{width:200px;height:200px;position:fixed/abolute;left:50%;top:50%;margin:-100px 0 0 -100px（自身宽高一半）};</p>
+<p>18.ie透明度：filter:alper(opacity:50)</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>刘世豪</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2019/11/03/HTML知识点总结/">http://yoursite.com/2019/11/03/HTML知识点总结/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/10/31/JSP中使用JDBC连接MySQL数据库的详细步骤/">JSP中使用JDBC连接MySQL数据库的详细步骤</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 刘世豪 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
