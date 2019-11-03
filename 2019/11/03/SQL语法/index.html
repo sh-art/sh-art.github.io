@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="刘世豪">
+
+
+    <meta name="subtitle" content="庸人自扰">
+
+
+
+
+<title>SQL语法 | 今晚月色真美</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">SQL语法</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">刘世豪</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十一月 3, 2019&nbsp;&nbsp;21:35:07</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>1.数据库基础语法<br>创建数据库</p>
+<p>create database 数据库名;<br>删除数据库</p>
+<p>drop database 数据库名;<br>选择数据库</p>
+<p>use 数据库名;<br>2.表的约束<br>主键约束</p>
+<p>primary key<br>主键自增</p>
+<p>auto_increment primary key<br>外键约束</p>
+<p>命名写法：<br>constraint 外键约束的名称<br>foreign key(teaid)//将从表中的teaid设为外键<br>references student(teaid);关联student表的teaid主键<br>增加外键约束<br>alter table 表名<br>add constraint 外键约束的名称<br>foreign key(teaid)//将从表中的teaid设为外键<br>references student(teaid);关联student表的teaid主键<br>不命名写法：<br>alter table 表名 add foreign key(外键) references 从表(外键);<br>非空约束</p>
+<p>not null<br>默认约束</p>
+<p>default 默认值<br>唯一约束</p>
+<p>unique<br>3.操作表的结构<br>创建表</p>
+<p>create table 表名(字段名1 类型1 约束,…);<br>修改表名</p>
+<p>rename table 旧表名 to 新表名<br>修改表结构</p>
+<p>alter table 表名 动作<br>动作</p>
+<p>修改字段类型：<br>modify 字段名 新类型<br>修改字段名：<br>change 老字段名 新字段名 新字段类型<br>添加字段:<br>add 字段名 字段类型<br>删除字段:<br>drop 字段名<br>删除表</p>
+<p>dorp table 表名<br>查看表结构</p>
+<p>desc 表名;<br>4.操作表的数据<br>插入数据</p>
+<p>insert into 表名(字段一,…) values(值一,…);<br>更新语句</p>
+<p>update 表名 set 字段一 = 值一,… where 条件<br>删除语句</p>
+<p>delete from 表名 where 条件<br>注意：先删除从表记录，再删除主表记录<br>清空语句</p>
+<p>delete from 表名<br>truncate table 表名<br>区别：truncate将重置auto_increment不可恢复数据<br>查询语句</p>
+<p>select 字段名 聚合函数<br>from 表名<br>where 条件<br>order by 字段名 asc/desc<br>limit 字段名 限制行数<br>group by 字段名<br>having 条件 //主要解决条件语句不能用聚合函数问题<br>常用模糊查询</p>
+<p>where 字段名 like ‘值’</p>
+<pre><code>* 任意字符串
+% 表示任意长度的字符，0也是任意长度
+_ 表示只有一个字符</code></pre><p>常用聚合函数<br>sum（字段名）     求和<br>max（字段名）     最大数<br>min（字段名）     最小值<br>avg（字段名）     平均数<br>count（字段名）     个数</p>
+<p>count（字段名）和count（*）区别就是：<br>count（字段名）如果字段有null值，则不计数<br>多表查询<br>内连接</p>
+<p>select 字段一，字段二，…from 表一 inner join 表二 on 条件;<br>左连接</p>
+<p>select 字段一，字段二，…from 表一 left join 表二 on 条件；<br>右连接</p>
+<p>select 字段一，字段二，…from 表一 right join 表二 on 条件；</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>刘世豪</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2019/11/03/SQL语法/">http://yoursite.com/2019/11/03/SQL语法/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/11/03/HTML知识点总结/">HTML知识点总结</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 刘世豪 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
